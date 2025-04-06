@@ -3,6 +3,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Home from './components/Pages/Home';
+import Basket from './components/Pages/Basket';
 import About from './components/Pages/About';
 import Contact from './components/Pages/Contact';
 import Services from './components/Pages/Services';
@@ -17,7 +18,8 @@ const App = () => {
       { id: 2, path: "/about", element: <About /> },
       { id: 3, path: "/contact", element: <Contact /> },
       { id: 4, path: "/services", element: <Services /> },
-      { id: 5, path: "*", element: <NotFound /> },
+      { id: 5, path: "/cart", element: <Basket /> },
+      { id: 6, path: "*", element: <NotFound /> },
     ];
   
   return (

@@ -25,7 +25,7 @@ const ProductsDetail = () => {
         setProduct(currentproduct); // set product details
         setCurrentImage(currentproduct.images[0]); // set default image 
         basket.forEach(({id})=>{
-          currentproduct.id === id && setIsAddedBasket(true);
+          currentproduct.id === id && setIsAddedBasket(true);// basket id sini tutsun
         })
         setLoading(false);  
       });
@@ -43,12 +43,27 @@ const ProductsDetail = () => {
   }
 
   // Basket function
+  // Basket funksiyası: Məhsulu səbətə əlavə etmək
   function addBasket() {
-    const item = { ...product, count: 1 };
-    addNewProduct(product)
-    setIsAddedBasket(true);
+    // Basketdə mövcud məhsulu tapırıq
+    const existingProduct = basket.find(item => item.id === product.id);
+
+    if (existingProduct) {
+      // Əgər məhsul artıq səbətdə varsa, yalnız count artırılır
+      existingProduct.count += 1;
+      existingProduct.totalPrice = existingProduct.count * existingProduct.price;
+      // Basket yenilənir və localStorage-da saxlanır
+      localStorage.setItem("basket", JSON.stringify([...basket]));
+    } else {
+      // Əgər məhsul səbətdə yoxdursa, yeni məhsul əlavə olunur
+      const item = { ...product, count: 1, totalPrice: product.price };
+      addNewProduct(item); // Yeni məhsul əlavə edilir
+    }
+
+    setIsAddedBasket(true); // Məhsulun artıq səbətdə olduğunu göstəririk
     console.log("Məhsul səbətə əlavə olundu:", product);
   }
+
 
   return (
     <div>
